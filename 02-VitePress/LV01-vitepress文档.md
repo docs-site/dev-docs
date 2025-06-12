@@ -7,9 +7,15 @@ tags:
 categories:
 ---
 
+vue2时代，因为vue采用了webpack进行默认项目构建（VuePress v2版本也开始支持vite构建），所以vuepress也是基于webpack构建的。后来因为对webpack启动以及构建速度的不满，新构建工具Vite诞生了，然后也就顺利成为了vue3的默认构建工具，为了vue3的文档vitepress也就顺理成章出现了。
+
 <!-- more -->
 
-## <font size=3>一、创建site</font>
+## <font size=3>一、与VuePress的区别</font>
+
+> Tips：[与VuePress的区别 | VitePress中文网](https://vitejs.cn/vitepress/guide/differences-from-vuepress.html)
+
+## <font size=3>二、创建site</font>
 
 > 这个直接看官网的文档就是了：[快速开始 | VitePress - (vitepress.dev)](https://vitepress.dev/zh/guide/getting-started) 或者 [VitePress | 由 Vite 和 Vue 驱动的静态站点生成器](https://vitejs.cn/vitepress/)。
 
@@ -119,7 +125,11 @@ D:\sumu_blog\site-vitepress> npm run docs:dev
 
 然后浏览器打开对应的地址，就可以看到生成的静态页面啦。
 
-## <font size=3>二、基本配置</font>
+## <font size=3>三、基本配置</font>
 
-
+> Tips：
+>
+> - [站点配置 | VitePress](https://vitejs.cn/vitepress/reference/site-config)
+> - [frontmatter 配置 | VitePress](https://vitejs.cn/vitepress/reference/frontmatter-config)
+> - [默认主题配置 | VitePress](https://vitejs.cn/vitepress/reference/default-theme-config)
 
