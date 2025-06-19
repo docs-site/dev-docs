@@ -127,6 +127,80 @@ D:\sumu_blog\site-vitepress> npm run docs:dev
 
 ## <font size=3>三、基本配置</font>
 
+### <font size=3>1. 导航栏</font>
+
+```typescript
+	nav : [
+		{ 
+			text: 'nodejs', 
+			items: [
+				{ text: '01-基础', link: '/sdoc/01-nodejs/01-基础' },
+				{ text: '02-CDN', link: '/sdoc/01-nodejs/02-CDN' },
+			]
+		},
+		{ text: 'VitePress', link: '/sdoc/02-VitePress/' },
+		{ text: 'TypeScript', link: '/sdoc/03-TypeScript/' },
+	],
+```
+
+
+
+### <font size=3>2. 侧边栏</font>
+
+```typescript
+	sidebar: {
+		// 当用户位于 `guide` 目录时，会显示此侧边栏
+		'/sdoc/01-nodejs': [
+			{
+				text: '01-基础',
+				link: '/sdoc/01-nodejs/01-基础/',
+				collapsed: true,
+				items: [
+					{ text: 'Index', link: '/sdoc/01-nodejs/01-基础/' },
+					{ text: 'README', link: '/sdoc/01-nodejs/01-基础/README' },
+					{ text: 'LV01-nodejs环境', link: '/sdoc/01-nodejs/01-基础/LV01-nodejs环境' },
+					{ text: 'LV02-我的第一个node程序', link: '/sdoc/01-nodejs/01-基础/LV02-我的第一个node程序' },
+					{ text: 'LV03-npm包的发布与管理', link: '/sdoc/01-nodejs/01-基础/LV03-npm包的发布与管理' },
+				]
+			},
+			{
+				text: '02-CDN',
+				link: '/sdoc/01-nodejs/02-CDN/',
+				collapsed: true,
+				items: [
+					{ text: 'Index', link: '/sdoc/01-nodejs/02-CDN/' },
+					{ text: 'README', link: '/sdoc/01-nodejs/02-CDN/README' },
+					{ text: 'LV04-内容分发网络-CDN', link: '/sdoc/01-nodejs/02-CDN/LV04-内容分发网络-CDN' },
+				]
+			}
+		],
+		'/sdoc/02-VitePress': [
+			{
+				text: '02-VitePress',
+				items: [
+					{ text: 'Index', link: '/sdoc/02-VitePress/' },
+					{ text: 'README', link: '/sdoc/02-VitePress/README' },
+					{ text: 'LV01-vitepress文档', link: '/sdoc/02-VitePress/LV01-vitepress文档' }
+				]
+			}
+		],
+		'/sdoc/03-TypeScript': [
+			{
+				text: '03-TypeScript',
+				items: [
+					{ text: 'Index', link: '/sdoc/03-TypeScript/' },
+					{ text: 'README', link: '/sdoc/03-TypeScript/README' },
+					{ text: 'LV01-我的第一个ts项目', link: '/sdoc/03-TypeScript/LV01-我的第一个ts项目' },
+					{ text: 'LV02-ts项目配置选项', link: '/sdoc/03-TypeScript/LV02-ts项目配置选项' },
+					{ text: 'LV03-命令行接口与用户界面', link: '/sdoc/03-TypeScript/LV03-命令行接口与用户界面' },
+					{ text: 'LV04-单元测试', link: '/sdoc/03-TypeScript/LV04-单元测试' }
+				]
+			}
+		],
+	},
+```
+
+
 > Tips：
 >
 > - [站点配置 | VitePress](https://vitejs.cn/vitepress/reference/site-config)

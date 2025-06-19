@@ -51,7 +51,7 @@ npm由3个独立的部分组成：
 
 ## <font size=3>二、基本应用</font>
 
-### <font size=3>1. 注册账号</font>
+### <font size=3>1. 账号注册</font>
 
 这个没什么可写的，进入官网，点击`Sign Up`按照提示进行注册即可，注册还是很简单的，注册完毕之后要记得会提示验证邮箱，这个时候注意验证就好了，不验证的话可能会有问题。
 
@@ -194,7 +194,7 @@ npm init --yes
 
 > Tips：
 >
-> - [package.json | npm 中文网](https://npm.nodejs.cn/cli/v11/configuring-npm/package-json)
+> - [package.json | npm 中文网](https://npm.nodejs.cn/cli/v11/configuring-npm/package-json#描述)
 > - [package.json | npm Docs](https://docs.npmjs.com/cli/v7/configuring-npm/package-json)
 > - [package.json文件 -- JavaScript 标准参考教程（alpha）](https://javascript.ruanyifeng.com/nodejs/packagejson.html)
 
@@ -308,14 +308,83 @@ npm init --yes
 	</tbody>
 </table>
 
-`dependencies`和`devDependencies`对应的版本可以加上各种限定，主要有以下几种：
+##### <font size=3>4.3.1 [main](https://npm.nodejs.cn/cli/v11/configuring-npm/package-json#main)</font>
+
+main字段是模块 ID，它是程序的主要入口点。也就是说，如果包名为 `foo`，并且用户安装了它，然后执行 `require("foo")`，那么foo包的主模块的导出对象将被返回。如果未设置 `main`，则默认为包根文件夹中的 `index.js`。
+
+##### <font size=3>4.3.2 [bin](https://npm.nodejs.cn/cli/v11/configuring-npm/package-json#bin)</font>
+
+许多包都有一个或多个可执行文件，他们希望将它们安装到 PATH 中。npm 使这非常容易（事实上，它使用此功能来安装 "npm" 可执行文件。）
+
+要使用它，要在 package.json 中提供一个 `bin` 字段，它是命令名称到本地文件名的映射。全局安装此软件包时，该文件将链接到全局 bins 目录中，或者将创建一个 cmd（Windows 命令文件）来执行 `bin` 字段中的指定文件，因此它可以由 `name` 或 `name.cmd` 运行（在 Windows PowerShell 上）。
+
+当此包作为依赖安装在另一个包中时，该文件将被链接到该包可以直接通过 `npm exec` 或通过 `npm run` 调用它们时在其他脚本中的名称可用的位置。
+
+例如， myapp 可能有这个：
+
+```json
+{
+  "bin": {
+    "myapp": "bin/cli.js"
+  }
+}
+```
+
+因此，当安装 myapp 时，如果是类 unix 的操作系统，它会创建一个从 `cli.js` 脚本到 `/usr/local/bin/myapp` 的符号链接，如果是 Windows，它通常会在 `C:\Users\{Username}\AppData\Roaming\npm\myapp.cmd` 创建一个运行 `cli.js` 脚本的 cmd 文件。这个时候我们就可以在终端执行`myapp`来运行这个`cli.js`。
+
+如果有一个可执行文件，并且它的名称应该是包的名称，那么可以将其作为字符串提供。例如：
+
+```json
+{
+  "name": "my-program",
+  "version": "1.2.5",
+  "bin": "path/to/program"
+}
+```
+
+将与此相同：
+
+```json
+{
+  "name": "my-program",
+  "version": "1.2.5",
+  "bin": {
+    "my-program": "path/to/program"
+  }
+}
+```
+
+请确保在 `bin` 中引用的文件以 `#!/usr/bin/env node` 开头，否则脚本将在没有 node 可执行文件的情况下启动！
+
+> Tips：还可以使用 [directories.bin](https://npm.nodejs.cn/cli/v11/configuring-npm/package-json#directoriesbin) 设置可执行文件。
+
+##### <font size=3>4.3.3 [dependencies](https://npm.nodejs.cn/cli/v11/configuring-npm/package-json#dependencies)和[devDependencies](https://npm.nodejs.cn/cli/v11/configuring-npm/package-json#devdependencies)</font>
+
+这两个字段都是拿来记录项目所使用的依赖的，但是如果有其他人计划在他们的程序中下载和使用我们的模块，那么他们可能不想或不需要下载和构建我们使用的外部测试或文档框架。例如eslint(代码检查)、terser(代码压缩混淆)以及prettier(代码格式化)等依赖包，我们开发的时候是有用的，但是发布之后，其他人导入我们的模块的时候，这些依赖就没有什么必要了。在这种情况下，最好将这些附加项映射到 `devDependencies` 对象中。
+
+有什么区别？`devDependencies` 和 `dependencies`的区别核心体现在 **npm包** 中。只要开发的项目是**发npm包**提供给外部、其他业务项目使用的，需要非常注意依赖的安装地方，因为搞不好很容易在业务使用中会出现bug。而如果只是自己项目用，**不需要发npm包**的话，把依赖安装到 `devDependencies` 或者 `dependencies` 中，实质上是没有任何区别的。
+
+平时在本地开发的时候就可以看到，我们执行`npm install`之后，所有的`devDependencies` 和 `dependencies`都会被安装，那么，发布npm包之后呢？我们来看着两个版本：
+
+- [@docs-site/tdoc-cli - npm@0.0.2](https://www.npmjs.com/package/@docs-site/tdoc-cli/v/0.0.2?activeTab=dependencies)
+
+![image-20250620143808410](./LV03-npm包的发布与管理/img/image-20250620143808410.png)
+
+- [@docs-site/tdoc-cli - npm@0.0.3](https://www.npmjs.com/package/@docs-site/tdoc-cli/v/0.0.3?activeTab=dependencies)
+
+![image-20250620144427984](./LV03-npm包的发布与管理/img/image-20250620144427984.png)
+
+可以看到这两个版本吧    @types/node、commander这两个包从`devDependencies` 移到了 `dependencies`，原因是我们的cli工具运行依赖于这两个包，我们可以通过`npm i -g @docs-site/tdoc-cli@version`安装一下这两个版本，然后对比以下node_modules目录：
+
+![image-20250620145401624](./LV03-npm包的发布与管理/img/image-20250620145401624.png)
+
+可以发现，0.0.3版本比0.0.2版本多了三个包，其中两个就是上面移到dependencies的，第三个应该是这两个包中所依赖的，就一起安装了。所以很明显，当我们发布npm包之后，通过npm install安装的时候，就不会安装devDependencies中的依赖，但是在本地项目中的话，npm install会安装所有依赖。
+
+对于`dependencies`和`devDependencies`对应的版本可以加上各种限定，主要有以下几种：
 
 - **指定版本**：比如`1.2.2`，遵循“大版本.次要版本.小版本”的格式规定，安装时只安装指定版本。
-
 - **波浪号（tilde）+指定版本**：比如`~1.2.2`，表示安装1.2.x的最新版本（不低于1.2.2），但是不安装1.3.x，也就是说安装时不改变大版本号和次要版本号。
-
-- **插入号（caret）+指定版本**：比如ˆ1.2.2，表示安装1.x.x的最新版本（不低于1.2.2），但是不安装2.x.x，也就是说安装时不改变大版本号。需要注意的是，如果大版本号为0，则插入号的行为与波浪号相同，这是因为此时处于开发阶段，即使是次要版本号变动，也可能带来程序的不兼容。
-
+- **插入号（caret）+指定版本**：比如`ˆ1.2.2`，表示安装1.x.x的最新版本（不低于1.2.2），但是不安装2.x.x，也就是说安装时不改变大版本号。需要注意的是，如果大版本号为0，则插入号的行为与波浪号相同，这是因为此时处于开发阶段，即使是次要版本号变动，也可能带来程序的不兼容。
 - **latest**：安装最新版本。
 
 ### <font size=3>5.`npm`项目发布与管理</font>
@@ -692,59 +761,7 @@ GitHub Action 是一个持续集成和持续交付平台，可帮助我们自动
 
 然后我们编写工作流文件：
 
-```yml
-# .github/workflows/publish.yml
-
-name: Publish Package to npmjs
-
-on:
-  push:
-    branches:
-      - master  # 仅在main分支上推送时触发
-    tags:
-      - 'v*'
-  # 允许从 Actions 选项卡手动运行此工作流程
-  workflow_dispatch:
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      id-token: write
-    steps:
-      - name: Checkout      # 检出仓库代码到工作目录
-        uses: actions/checkout@v4
-      
-      - name: 打印相关路径
-        run: | # | 为 yaml 的特定符号，其下可以使用多行文字。
-          echo "当前路径为 $(pwd)"
-          echo "工作路径为 ${{ github.workspace }}"
-          echo "HOME路径为 $HOME"
-
-      - name: Setup Node.js  # 设置Node.js环境和npm registry
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20.x'
-          registry-url: 'https://registry.npmjs.org'
-          
-      - name: Update npm     # 更新npm到最新版本
-        run: npm install -g npm
-      # npm ci命令类似于 npm install 但它旨在用于自动化环境，如测试平台，持续集成和部署
-      # 可以帮助捕获由大多数 npm 用户的增量安装的本地环境引起的错误或不一致
-      - name: Install dependencies  # 使用package-lock.json精确安装依赖
-        run: npm ci
-        
-      - name: Build package  # 编译打包生产环境代码
-        run: npm run build
-
-      - name: publish package  # 发布包到npmjs
-        # 仅当提交信息包含[publish]时触发
-        if: "contains(github.event.head_commit.message, '[publish]')"
-        run: npm publish --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_PERNEL_TOKEN }}  # 使用NPM_TOKEN环境变量进行身份验证
-```
+[tdoc-cli/.github/workflows/npm-publish.yaml at master · docs-site/tdoc-cli · GitHub](https://github.com/docs-site/tdoc-cli/blob/master/.github/workflows/npm-publish.yaml)
 
 ### <font size=3>4. 发布到仓库release页面</font>
 
@@ -767,64 +784,6 @@ github仓库会有一个release页面，如下图：
 
 #### <font size=3>4.3 工作流编写</font>
 
-```yaml
-# .github/workflows/publish.yml
-
-name: Publish Package to npmjs
-
-on:
-  push:
-    tags:
-      - 'v*'
-  # 允许从 Actions 选项卡手动运行此工作流程
-  workflow_dispatch:
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      id-token: write
-    steps:
-      - name: Checkout      # 检出仓库代码到工作目录
-        uses: actions/checkout@v4
-      
-      - name: 打印相关路径
-        run: | # | 为 yaml 的特定符号，其下可以使用多行文字。
-          echo "当前路径为 $(pwd)"
-          echo "工作路径为 ${{ github.workspace }}"
-          echo "HOME路径为 $HOME"
-
-      - name: Setup Node.js  # 设置Node.js环境和npm registry
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20.x'
-          registry-url: 'https://registry.npmjs.org'
-          
-      - name: Update npm     # 更新npm到最新版本
-        run: npm install -g npm
-      # npm ci命令类似于 npm install 但它旨在用于自动化环境，如测试平台，持续集成和部署
-      # 可以帮助捕获由大多数 npm 用户的增量安装的本地环境引起的错误或不一致
-      - name: Install dependencies  # 使用package-lock.json精确安装依赖
-        run: npm ci
-        
-      - name: Build package  # 编译打包生产环境代码
-        run: npm run build
-
-      - name: Create and Upload Release  # 创建并上传GitHub Release
-        uses: softprops/action-gh-release@v2.3.2
-        if: startsWith(github.ref, 'refs/tags/')
-        with:
-          token: ${{ secrets.PERSONAL_ACCESS_TOKENS_GITHUB }}
-          tag_name: ${{ github.ref }}
-          name: Release ${{ github.ref }}
-          body: |
-            **版本说明**  
-            基于标签 ${{ github.ref }} 构建的稳定版本。
-          files: |
-            ${{ github.workspace }}/*
-
-```
-
+[tdoc-cli/.github/workflows/release-page.yaml at master · docs-site/tdoc-cli · GitHub](https://github.com/docs-site/tdoc-cli/blob/master/.github/workflows/release-page.yaml)
 
 
