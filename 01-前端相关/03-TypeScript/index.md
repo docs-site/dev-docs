@@ -1,10 +1,10 @@
 ---
-title: nodejs相关文档
+title: TypeScript
 index: false
 icon: material-symbols:folder-open
 ---
 
-nodejs文档说明
+这里是TypeScript相关文档。
 
 <!-- more -->
 

@@ -4,7 +4,7 @@ index: false
 icon: material-symbols:folder-open
 ---
 
-VitePress文档说明
+这里是VitePress相关文档。
 
 <!-- more -->
 

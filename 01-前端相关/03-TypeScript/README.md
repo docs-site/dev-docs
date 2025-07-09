@@ -1,10 +1,10 @@
 ---
-title: VitePress相关文档
+title: TypeScript
 index: false
 icon: material-symbols:folder-open
 ---
 
-VitePress相关文档
+这里是TypeScript相关文档。
 
 <!-- more -->
 
