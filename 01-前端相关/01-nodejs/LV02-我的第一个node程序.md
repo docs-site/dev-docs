@@ -9,9 +9,9 @@ categories:
 
 <!-- more -->
 
-## <font size=3>一、npm项目工程</font>
+## 一、npm项目工程
 
-### <font size=3>1. 初始化npm工程</font>
+### 1. 初始化npm工程
 
 首先肯定需要初始化一个npm项目工程啦，直接执行：
 
@@ -36,7 +36,7 @@ npm install -y
 }
 ```
 
-### <font size=3>2. 安装依赖</font>
+### 2. 安装依赖
 
 执行下面的命令：
 
@@ -46,7 +46,7 @@ npm install
 
 上面建立的是空的工程，所以其实也没有什么依赖安装，但是还是会生成一个`package-lock.json`文件。
 
-### <font size=3>3. 创建index.js</font>
+### 3. 创建index.js
 
 我们创建index.js文件，里面打印一个hello world：
 
@@ -54,9 +54,9 @@ npm install
 console.log(`✅ Hello, World!`);
 ```
 
-## <font size=3>二、怎么运行？</font>
+## 二、怎么运行？
 
-### <font size=3>1. node命令</font>
+### 1. node命令
 
 我们进入 index.js 所在目录，执行：
 
@@ -68,7 +68,7 @@ node ./index.js
 
 <img src="./LV02-我的第一个node程序/img/image-20250608224034627.png" alt="image-20250608224034627" />
 
-### <font size=3>2. 还有别的办法吗？</font>
+### 2. 还有别的办法吗？
 
 我们还可以用npm run命令，但是需要修改`package.json`：
 
@@ -90,9 +90,9 @@ node ./index.js
 
 发现也是可以运行的。
 
-### <font size=3>3. 能全局运行吗？</font>
+### 3. 能全局运行吗？
 
-#### <font size=3>3.1 本地包全局安装</font>
+#### 3.1 本地包全局安装
 
 上面两个只能在工程目录下运行，我要是想在命令行的任意地方运行，该怎么做？就像node、npm等命令一样。当然也可以啦。我们需要修改`package.json`，添加一个名为`bin`的键，它的值为我们自定义的命令的名称，例如：
 
@@ -127,7 +127,7 @@ npm link
 
 这个就是执行我们的本地npm项目了。
 
-#### <font size=3>3.2 出现问题？</font>
+#### 3.2 出现问题？
 
 然后我们在命令行执行：
 
@@ -153,7 +153,7 @@ console.log(`✅ Hello, World!`);
 
 终于可以了！！！
 
-#### <font size=3>3.3 怎么卸载？</font>
+#### 3.3 怎么卸载？
 
 进入sdoc-cli目录，执行：
 
@@ -162,9 +162,9 @@ npm un -g     # 若是在其他目录，还要加上包名
 npm unlink -g # 这个也可以
 ```
 
-## <font size=3>三、发布到npm</font>
+## 三、发布到npm
 
-### <font size=3>1. 登录npm</font>
+### 1. 登录npm
 
 我们在命令行执行：
 
@@ -182,7 +182,7 @@ npm whomi
 
 <img src="./LV02-我的第一个node程序/img/image-20250609073104947.png" alt="image-20250609073104947" />
 
-### <font size=3>2. 发布</font>
+### 2. 发布
 
 直接执行：
 
@@ -200,11 +200,11 @@ npm publish
 
 就会看到自己发布的npm包啦。
 
-## <font size=3>四、接收参数？</font>
+## 四、接收参数？
 
 是不是可以接收一些参数，来帮我处理一些命令？比如经常写md文档，是不是可以执行 `sdco n xxx.md`，这样直接创建一个指定格式的md文档？
 
-### <font size=3>1. 怎么获取命令行参数？</font>
+### 1. 怎么获取命令行参数？
 
 在学习c语言或者shell的时候知道，他们有argc、argv参数，可以获取到来自命令行的参数，那么javasrcipt呢？我们可以看一下Node.js文档：[process 进程 | Node.js v24 文档](https://nodejs.cn/api/process.html#process_process_argv)，这里有说明。
 
@@ -237,26 +237,26 @@ node process-args.js one two=three four
 
 所以我们自己的参数的索引是从2开始的。所以我们可以通过这种方式来获取名命令行的参数。
 
-### <font size=3>2. commander</font>
+### 2. commander
 
-#### <font size=3>2.1 简介</font>
+#### 2.1 简介
 
 对于命令行参数的解析，我们有现成的模块可以使用，那就是 [Commander](https://commander.nodejs.cn/) ，`commander.js` 是一个广受欢迎的 Node.js 包，它为开发者提供了一套简洁而强大的 API，用于快速创建功能完备、用户友好的命令行界面（CLI）应用程序。源码仓库是 [tj/commander.js](https://github.com/tj/commander.js)，关于具体的使用方法，可以直接看文档：
 
 - [开发文档 | Commander 中文网](https://commander.nodejs.cn/docs/)
 - [commander.js/Readme_zh-CN.md at master · tj/commander.js · GitHub](https://github.com/tj/commander.js/blob/master/Readme_zh-CN.md)
 
-#### <font size=3>2.2 安装commander</font>
+#### 2.2 安装commander
 
 ```shell
 npm install commander
 ```
 
-#### <font size=3>2.3 commander demo</font>
+#### 2.3 commander demo
 
 源码中为我们提供了大量的example：[commander.js/examples at master · tj/commander.js · GitHub](https://github.com/tj/commander.js/tree/master/examples)
 
-#### <font size=3>2.4 添加一个 sdoc n 子命令</font>
+#### 2.4 添加一个 sdoc n 子命令
 
 我们修改index.js如下：
 
@@ -276,7 +276,7 @@ program
 program.parse();
 ```
 
-#### <font size=3>2.5 接收一个参数？</font>
+#### 2.5 接收一个参数？
 
 我们向sdoc n命令传递一个参数：
 
@@ -297,25 +297,25 @@ program
 program.parse();
 ```
 
-## <font size=3>五、文件操作</font>
+## 五、文件操作
 
 我现在主要是有两个需求，一个是按照固定模板创建md文档，另一个是替换文档中的图片相对路径，我们接下来一步一步实现这两个功能。
 
-### <font size=3>1. 要用哪些模块</font>
+### 1. 要用哪些模块
 
-#### <font size=3>1.1 Node.js 文件系统</font>
+#### 1.1 Node.js 文件系统
 
 Node.js 的文件系统模块（**fs** 模块）提供了丰富的 API，用于读取、写入、删除文件以及执行其他文件系统操作。fs 模块既支持同步方法也支持异步方法，使得开发者可以根据具体需求选择合适的方式来处理文件操作。这里可以参考中文文档：[fs 文件系统 | Node.js v24 文档](https://nodejs.cn/api/fs.html)，也可以参考[Node.js 中文网 — Node.js 简介](https://nodejs.cn/en/learn)中操作文件相关部分。
 
 Node.js 文件系统（fs 模块）模块中的方法均有异步和同步版本，例如读取文件内容的函数有异步的 fs.readFile() 和同步的 fs.readFileSync()。异步的方法函数最后一个参数为回调函数，回调函数的第一个参数包含了错误信息(error)。建议使用异步方法，比起同步，异步方法性能更高，速度更快，而且没有阻塞。
 
-#### <font size=3>1.2 readline模块</font>
+#### 1.2 readline模块
 
 Node.js 的 `readline` 模块是一个用于从可读流（如 `process.stdin`）逐行读取数据的接口。它提供了一种简单的方式来处理命令行输入，非常适合创建交互式命令行应用程序。可以参考：[readline 逐行读取 | Node.js v24 文档](https://nodejs.cn/api/readline.html#逐行读取)
 
-### <font size=3>2. 创建markdown文档</font>
+### 2. 创建markdown文档
 
-#### <font size=3>2.1 功能实现</font>
+#### 2.1 功能实现
 
 我们通过fs模块来实现文件的创建和读写，通过readline模块实现
 
@@ -371,7 +371,7 @@ program.parse();
 
 ```
 
-#### <font size=3>2.2 说明</font>
+#### 2.2 说明
 
 我们进入项目目录，执行：
 
@@ -382,11 +382,11 @@ node .\index.js n js文档 # 创建 js文档.md
 
 命令执行时，会先检测文件是否存在，若是存在则会提示是否覆盖，若是不存在则会直接创建。
 
-### <font size=3>3. 按模板创建</font>
+### 3. 按模板创建
 
 完整的源码可以看这里：[GitHub - docs-site/sdoc-cli: 我的npm命令](https://github.com/docs-site/sdoc-cli)（随着时间推移，可能更新了，但是大概逻辑是一样的）
 
-#### <font size=3>3.1 什么样的模板？</font>
+#### 3.1 什么样的模板？
 
 一般静态网页的生成器在渲染markdown文档的时候都需要一些文档信息，如：
 
@@ -406,7 +406,7 @@ categories:
 
 我现在希望可以自动填充文件标题和创建时间，时间信息为`YYYY-MM-DD HH:MM:SS`。我们把模板命名为post.md，放在scaffolds目录下。
 
-#### <font size=3>3.2 获取时间</font>
+#### 3.2 获取时间
 
 怎么获取时间？参考一下这里：[日期 - JavaScript | MDN Web 中文网](https://web.nodejs.cn/en-us/docs/web/javascript/reference/global_objects/date/)，JavaScript `Date` 对象以独立于平台的格式表示单个时刻。`Date` 对象封装一个整数，表示自 UTC（纪元）1970 年 1 月 1 日午夜开始以来的毫秒数。这个可作为单独的模块，方便调用，我们编写一个 utils/sys_time.js 来实现时间的获取：
 
@@ -449,7 +449,7 @@ console.log(getTime.getCurrentDateTime()); // 通过对象属性调用
 console.log(`⏰ 创建时间: ${getTime.getCurrentDateTime()}`);
 ```
 
-#### <font size=3>3.3 读取文件</font>
+#### 3.3 读取文件
 
 读取文件我们可以使用fs模块的readFileSync函数：
 
@@ -478,7 +478,7 @@ const template = readTemplate(templatePath);
 console.log(template);
 ```
 
-#### <font size=3>3.4 替换占位符</font>
+#### 3.4 替换占位符
 
 可以读取文件了，那么怎么把里面的 `{{ title }}`和 `{{ date }}`替换成标题和时间呢？我们这个时候要用到字符串的replace方法：
 
@@ -493,9 +493,9 @@ function generateContent(template, name) {
 
 我们传入要处理的字符串，通过replace方法全局替换。
 
-#### <font size=3>3.5 完整的demo</font>
+#### 3.5 完整的demo
 
-##### <font size=3>3.5.1 index.js</font>
+##### 3.5.1 index.js
 
 ```javascript
 #!/usr/bin/env node

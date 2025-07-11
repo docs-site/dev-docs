@@ -11,11 +11,11 @@ categories:
 
 <!-- more -->
 
-## <font size=3>一、自定义主题</font>
+## 一、自定义主题
 
 一开始肯定是去查资料怎么实现喽，先去翻官网的资料，看一下这个[自定义主题 | VitePress](https://vitejs.cn/vitepress/guide/custom-theme#using-a-custom-theme)和[扩展默认主题 | VitePress](https://vitejs.cn/vitepress/guide/extending-default-theme)，接下来就先按文档来尝试一下文档中说的内容。
 
-### <font size=3>1. 解析主题</font>
+### 1. 解析主题
 
 可以通过创建一个 `.vitepress/theme/index.js` 或 `.vitepress/theme/index.ts` 文件 (即“主题入口文件”) 来启用自定义主题。当**检测到存在主题入口文件时，VitePress 总会使用自定义主题而不是默认主题**。但我们可以[扩展默认主题](https://vitejs.cn/vitepress/guide/extending-default-theme)来在其基础上实现更高级的自定义。我这里用的是ts文件，所以我的目录结构就是：
 
@@ -42,7 +42,7 @@ export default DefaultTheme
 
 这样，我们就可以在默认主题上扩展自己的内容啦。
 
-### <font size=3>2. 主题接口</font>
+### 2. 主题接口
 
 我们查阅文档[自定义主题 | VitePress —— 主题接口](https://vitejs.cn/vitepress/guide/custom-theme#theme-interface)这部分，可以知道自定义主题是一个对象，找个对象具有如下接口：
 
@@ -72,7 +72,7 @@ interface EnhanceAppContext {
 }
 ```
 
-### <font size=3>3. 扩展默认主题</font>
+### 3. 扩展默认主题
 
 我们上面扩展默认主题的写法是没办法再自定义了，我们可以使用主体接口中的extend选项来扩展，这样`theme/index.ts`可以修改如下：
 
@@ -88,11 +88,11 @@ export default {
 
 这样我们不仅可以扩展主题，还可以在里面使用其它接口。
 
-## <font size=3>二、构建布局</font>
+## 二、构建布局
 
 接下来我们看一下 [自定义主题 | VitePress —— 构建布局](https://vitejs.cn/vitepress/guide/custom-theme#building-a-layout) 来按照文档写一个自定义的布局。
 
-### <font size=3>1.  `<Content />`</font>
+### 1.  `<Content />`
 
 最基本的布局组件需要包含一个[`<Content />`](https://vitejs.cn/vitepress/reference/runtime-api#content)组件：
 
@@ -106,7 +106,7 @@ export default {
 </template>
 ```
 
-### <font size=3>2. 使用自定义布局</font>
+### 2. 使用自定义布局
 
 我们修改`theme/index.ts`如下：
 
@@ -163,7 +163,7 @@ const { Layout } = DefaultTheme
 
 然后就会看到主页面正常了，最上面会显示出`Custom Layout!`这个字符串。但是有一些页面可能是有默认的布局影响，会显示异常，可以自己新建一个md文档，在里面做测试。
 
-### <font size=3>3. [usedata](https://vitejs.cn/vitepress/reference/runtime-api#usedata)</font>
+### 3. [usedata](https://vitejs.cn/vitepress/reference/runtime-api#usedata)
 
 [`useData()`](https://vitejs.cn/vitepress/reference/runtime-api#usedata) 为我们提供了所有的运行时数据，以便我们根据不同条件渲染不同的布局。我们可以访问的另一个数据是当前页面的 frontmatter。例如
 
@@ -193,11 +193,11 @@ const { theme, frontmatter, page } = useData()
 
 ```
 
-### <font size=3>4. 总结</font>
+### 4. 总结
 
 不是做vue开发的，所以这里的布局后来就没改过了，直接注释掉了，还是用默认的吧。
 
-## <font size=3>三、注册全局组件</font>
+## 三、注册全局组件
 
 接下来参考 [扩展默认主题 | VitePress —— 注册全局组件](https://vitejs.cn/vitepress/guide/extending-default-theme#registering-global-components) 这部分内容，这个主要是要用到vue的[组件注册](https://cn.vuejs.org/guide/components/registration)，这里就不详细去了解了，属于vue的知识了。我们在theme目录下创建一个components目录，里面专门放我们的组件，然后创建一个MyGlobalComponent.vue文件并添加以下内容：
 
