@@ -17,6 +17,11 @@
       name: '',
       repo: '',
       loadSidebar: true, // 加载自定义侧边栏。设置为 true 后会加载 _sidebar.md 文件，也可以自定义加载的文件名(例如：loadSidebar: 'summary.md')。
+      copyCode: {        // docsify-copy-code (defaults)
+        buttonText: 'Copy',
+        errorText: 'Error',
+        successText: 'Copied',
+      },
     }
   </script>
   <!-- Docsify v4 -->
@@ -26,6 +31,9 @@
   <!-- 1. https://github.com/iPeng6/docsify-sidebar-collapse - Support docsify sidebar catalog expand and collapse. -->
   <link rel="stylesheet" href="./.docsify/styles/sidebar.css" />
   <script src="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/docsify-sidebar-collapse.min.js"></script>
+  <!-- 2. https://github.com/jperasmus/docsify-copy-code - A docsify plugin that copies Markdown code block to your clipboard -->
+  <link rel="stylesheet" href="./.docsify/styles/copy_code.css" />
+  <script src="//cdn.jsdelivr.net/npm/docsify-copy-code/dist/docsify-copy-code.min.js"></script>
 </body>
 
 </html>
