@@ -22,6 +22,12 @@
         errorText: 'Error',
         successText: 'Copied',
       },
+      count: {           // docsify-count (defaults)
+        countable: true,
+        fontsize: '0.9em',
+        color: 'rgb(90,90,90)',
+        language: 'chinese'
+      }
     }
   </script>
   <!-- Docsify v4 -->
@@ -34,6 +40,8 @@
   <!-- 2. https://github.com/jperasmus/docsify-copy-code - A docsify plugin that copies Markdown code block to your clipboard -->
   <link rel="stylesheet" href="./.docsify/styles/copy_code.css" />
   <script src="//cdn.jsdelivr.net/npm/docsify-copy-code/dist/docsify-copy-code.min.js"></script>
+  <!-- 3. https://github.com/827652549/docsify-count - Add word count for markdown files of docsify.(添加字数统计). -->
+  <script src="//unpkg.com/docsify-count/dist/countable.js"></script>
 </body>
 
 </html>
