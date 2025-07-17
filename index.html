@@ -20,7 +20,10 @@
       copyCode: {        // docsify-copy-code (defaults)
         buttonText: 'Copy',
         errorText: 'Error',
-        successText: 'Copied',
+        successText: 'Copied'
+      },
+      imagePath: {
+        basePath: '/dev-docs'  // 部署目录前缀
       },
       count: {           // docsify-count (defaults)
         countable: true,
@@ -55,6 +58,8 @@
   <!-- 4. https://github.com/imyelo/docsify-pagination - Pagination for docsify -->
   <link rel="stylesheet" href="./.docsify/styles/pagination.css" />
   <script src="//unpkg.com/docsify-pagination/dist/docsify-pagination.min.js"></script>
+  <!-- 5. 自定义图片路径转换插件 -->
+  <script src="./.docsify/plugins/docsify-image-path.js"></script>
 </body>
 
 </html>
