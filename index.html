@@ -15,11 +15,17 @@
   <script>
     window.$docsify = {
       name: '',
-      repo: ''
+      repo: '',
+      loadSidebar: true, // 加载自定义侧边栏。设置为 true 后会加载 _sidebar.md 文件，也可以自定义加载的文件名(例如：loadSidebar: 'summary.md')。
     }
   </script>
   <!-- Docsify v4 -->
   <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
+
+  <!-- plugins -->
+  <!-- 1. https://github.com/iPeng6/docsify-sidebar-collapse - Support docsify sidebar catalog expand and collapse. -->
+  <link rel="stylesheet" href="./.docsify/styles/sidebar.css" />
+  <script src="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/docsify-sidebar-collapse.min.js"></script>
 </body>
 
 </html>
