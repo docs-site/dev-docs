@@ -27,7 +27,17 @@
         fontsize: '0.9em',
         color: 'rgb(90,90,90)',
         language: 'chinese'
-      }
+      },
+      pagination: {      // docsify-pagination (defaults)
+        previousText: '上一章节',
+        // or
+        nextText: {
+          '/en/': 'NEXT',
+          '/': '下一章节'
+        },
+        crossChapter: true,
+        crossChapterText: true,
+      },
     }
   </script>
   <!-- Docsify v4 -->
@@ -42,6 +52,9 @@
   <script src="//cdn.jsdelivr.net/npm/docsify-copy-code/dist/docsify-copy-code.min.js"></script>
   <!-- 3. https://github.com/827652549/docsify-count - Add word count for markdown files of docsify.(添加字数统计). -->
   <script src="//unpkg.com/docsify-count/dist/countable.js"></script>
+  <!-- 4. https://github.com/imyelo/docsify-pagination - Pagination for docsify -->
+  <link rel="stylesheet" href="./.docsify/styles/pagination.css" />
+  <script src="//unpkg.com/docsify-pagination/dist/docsify-pagination.min.js"></script>
 </body>
 
 </html>
