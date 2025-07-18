@@ -17,6 +17,9 @@
       name: '',
       repo: '',
       loadSidebar: true, // 加载自定义侧边栏。设置为 true 后会加载 _sidebar.md 文件，也可以自定义加载的文件名(例如：loadSidebar: 'summary.md')。
+      alias: {
+        '/.*/_sidebar.md': '/_sidebar.md'// docsify会逐级查找_sidebar.md，找不到时会报错，这里可以定义路由别名，当找不到时都用根目录的_sidebar.md。
+      }, 
       copyCode: {        // docsify-copy-code (defaults)
         buttonText: 'Copy',
         errorText: 'Error',
