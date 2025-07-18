@@ -48,7 +48,12 @@
         casing: 'capitalize',
         linkColor: 'var(--theme-color, #42b983)',
         size: 'small'
-      }
+      },
+      toc: {
+        scope: '.markdown-section',
+        headings: 'h2, h3, h4, h5, h6',
+        title: '页内导航',
+      },
     }
   </script>
   <!-- Docsify v4 -->
@@ -73,6 +78,9 @@
   <script src="./.docsify/plugins/docsify-breadcrumb.js"></script>
   <!-- 7. 格式化内容插件 -->
   <script src="./.docsify/plugins/docsify-formatter.js"></script>
+  <!-- 8. 页内导航目录插件 -->
+  <link rel="stylesheet" href="./.docsify/styles/docsify-toc.css" />
+  <script src="./.docsify/plugins/docsify-toc.js"></script>
 </body>
 
 </html>

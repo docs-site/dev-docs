@@ -1,0 +1,131 @@
+.content {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: center;
+}
+:root {
+  --toc-width: 200px;
+}
+
+.markdown-section {
+  flex: 1;
+  min-width: 0;
+  margin: 0 48px;
+  transition: all 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
+  transform-origin: right center;
+}
+
+@media screen and (min-width: 1200px) {
+  .nav:not(.nothing) + .markdown-section {
+    margin-right: calc(var(--toc-width) + 68px);
+    transform: scaleX(0.95);
+    transition: all 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
+  }
+}
+.nav {
+  position: fixed;
+  right: 20px;
+  width: var(--toc-width);
+  box-sizing: border-box;
+  z-index: 1;
+}
+aside.nav.nothing {
+  width: 0;
+}
+
+.page_toc {
+  position: fixed;
+  border-left-style: solid;
+  border-left-width: 1px;
+  border-left-color: rgba(0, 0, 0, 0.07);
+  border-image-slice: 1;
+  padding-left: 5px;
+  overflow-y: auto;
+  max-height: calc(100vh - 100px);
+  transform: scaleX(-1); /* Flip horizontally to move scrollbar left */
+}
+
+.page_toc > * {
+  transform: scaleX(-1); /* Flip content back to normal */
+}
+
+.page_toc a > * {
+  pointer-events: none;
+}
+
+.page_toc code {
+  background-color: #f8f8f8;
+  border-radius: 2px;
+  color: #e96900;
+  font-family: 'Roboto Mono', Monaco, courier, monospace;
+  font-size: 0.8rem;
+  margin: 0 2px;
+  padding: 3px 5px;
+}
+
+.page_toc p.title {
+  margin: 0 auto;
+  padding-bottom: 5px;
+  font-weight: 600;
+  font-size: 1.2em;
+  text-align: center;
+  width: 80%;
+}
+.page_toc .anchor:hover:after {
+  content: "";
+}
+
+.page_toc ul {
+  list-style-type: none;
+  margin-top: 0px;
+  padding-left: 10px;
+  color: var(--text-color-base, black);
+  text-decoration: none;
+  font-weight: 300;
+  line-height: 1.6em;
+  font-size: 1.0em;
+}
+
+.page_toc ul a:hover span {
+  color: var(--text-color-tertiary, #42b983);
+  border-bottom: none !important;
+  text-decoration:none !important;
+}
+
+.page_toc ul a {
+  color: var(--text-color-base, black);
+  text-decoration: none;
+  font-weight: 300;
+  line-height: 1.6em;
+}
+
+@media screen and (max-width: 1200px) {
+  .nav,
+  .page_toc {
+    display: none;
+  }
+  .content {
+    display: block;
+  }
+  .markdown-section {
+    margin: 0 auto;
+    transform: none !important;
+  }
+}
+
+.page_toc .active {
+  border-left: 5px solid;
+  color: var(--theme-color, #42b983);
+  padding-left: 10px;
+}
+
+/* Hide scrollbar but keep scrolling functionality */
+.nav .page_toc {
+  overflow-y: auto !important;
+  scrollbar-width: none !important; /* Firefox */
+  -ms-overflow-style: none !important; /* IE/Edge */
+}
+
+.nav .page_toc::-webkit-scrollbar {
+  display: none !important; /* Chrome/Safari/Webkit */
+}
