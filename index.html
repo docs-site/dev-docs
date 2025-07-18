@@ -41,6 +41,14 @@
         crossChapter: true,
         crossChapterText: true,
       },
+      breadcrumb: {
+        showHome: true,
+        homeText: 'Home',
+        separator: ' &rsaquo; ',
+        casing: 'capitalize',
+        linkColor: 'var(--theme-color, #42b983)',
+        size: 'small'
+      }
     }
   </script>
   <!-- Docsify v4 -->
@@ -60,6 +68,9 @@
   <script src="//unpkg.com/docsify-pagination/dist/docsify-pagination.min.js"></script>
   <!-- 5. 自定义图片路径转换插件 -->
   <script src="./.docsify/plugins/docsify-image-path.js"></script>
+  <!-- 6. 面包屑导航插件 -->
+  <link rel="stylesheet" href="./.docsify/styles/docsify-breadcrumb.css" />
+  <script src="./.docsify/plugins/docsify-breadcrumb.js"></script>
 </body>
 
 </html>
