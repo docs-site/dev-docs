@@ -1,28 +1,45 @@
+/**
+ * @file docsify-hide-code.css
+ * @brief 代码隐藏样式文件
+ * @details 定义代码块的隐藏效果和展开按钮样式
+ */
+
+/**
+ * @brief 隐藏代码块容器样式
+ */
 .hide-code {
-    position: relative;
-    overflow-y: hidden !important;
+    position: relative;          /* 相对定位 */
+    overflow-y: hidden !important; /* 垂直方向隐藏溢出内容 */
 }
 
+/**
+ * @brief 隐藏代码遮罩层样式
+ * @details 创建渐变遮罩效果和展开按钮容器
+ */
 .hide-code .hide-code-mask {
-    text-align: center;
-    width: 100%;
-    padding-top: 78px;
-    background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, 0)), to(#fff));
-    background-image: linear-gradient(-180deg, rgba(255, 255, 255, 0) 0%, #fff 100%);
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 10;
+    text-align: center;          /* 文本居中 */
+    width: 100%;                /* 100%宽度 */
+    padding-top: 78px;          /* 顶部内边距 */
+    background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, 0)), to(#fff)); /* Webkit渐变 */
+    background-image: linear-gradient(-180deg, rgba(255, 255, 255, 0) 0%, #fff 100%); /* 标准渐变 */
+    position: absolute;          /* 绝对定位 */
+    left: 0;                    /* 左侧对齐 */
+    right: 0;                   /* 右侧对齐 */
+    bottom: 0;                  /* 底部对齐 */
+    z-index: 10;                /* 堆叠顺序 */
 }
 
+/**
+ * @brief 展开按钮样式
+ * @details 使用SVG内联方式定义向下箭头图标
+ */
 .hide-code .hide-code-mask .hide-code-mask-btn::before {
     content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1026 1024'%3E%3Cpath d='M857.088 224.256q28.672-28.672 69.12-28.672t69.12 28.672q29.696 28.672 29.696 68.608t-29.696 68.608l-382.976 380.928q-12.288 14.336-30.72 19.968t-38.912 4.608-40.448-8.704-34.304-22.016l-376.832-374.784q-29.696-28.672-29.696-68.608t29.696-68.608q14.336-14.336 32.256-21.504t36.864-7.168 37.376 7.168 32.768 21.504l313.344 309.248z' fill='%23aaa'/%3E%3C/svg%3E");
-    cursor: pointer;
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    transform: translateY(10px);
-    margin-right: 20px;
-    transition: all .3s;
+    cursor: pointer;             /* 鼠标手型 */
+    display: inline-block;       /* 行内块显示 */
+    width: 20px;                /* 宽度20px */
+    height: 20px;               /* 高度20px */
+    transform: translateY(10px); /* 垂直偏移10px */
+    margin-right: 20px;         /* 右侧外边距 */
+    transition: all .3s;        /* 所有属性变化添加0.3秒过渡 */
 }

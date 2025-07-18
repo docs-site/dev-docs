@@ -1,131 +1,197 @@
+/**
+ * @file docsify-toc.css
+ * @brief 目录(TOC)样式文件
+ * @details 定义右侧目录的布局、样式和响应式行为
+ */
+
+/**
+ * @brief 内容区域布局
+ */
 .content {
-  display: flex;
-  flex-direction: row-reverse;
-  justify-content: center;
+  display: flex;                  /* 弹性布局 */
+  flex-direction: row-reverse;    /* 反向行排列(目录在右) */
+  justify-content: center;        /* 内容居中 */
 }
+
+/**
+ * @brief 根变量定义
+ */
 :root {
-  --toc-width: 200px;
+  --toc-width: 200px;             /* 目录宽度200px */
 }
 
+/**
+ * @brief 主内容区域样式
+ */
 .markdown-section {
-  flex: 1;
-  min-width: 0;
-  margin: 0 48px;
-  transition: all 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
-  transform-origin: right center;
+  flex: 1;                        /* 弹性扩展 */
+  min-width: 0;                   /* 最小宽度为0 */
+  margin: 0 48px;                 /* 左右外边距48px */
+  transition: all 0.5s cubic-bezier(0.25, 0.1, 0.25, 1); /* 平滑过渡效果 */
+  transform-origin: right center;  /* 变换原点 */
 }
 
+/**
+ * @brief 大屏幕下的主内容区域调整
+ */
 @media screen and (min-width: 1200px) {
   .nav:not(.nothing) + .markdown-section {
-    margin-right: calc(var(--toc-width) + 68px);
-    transform: scaleX(0.95);
-    transition: all 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
+    margin-right: calc(var(--toc-width) + 68px); /* 调整右边距 */
+    transform: scaleX(0.95);       /* 水平缩放95% */
+    transition: all 0.5s cubic-bezier(0.25, 0.1, 0.25, 1); /* 平滑过渡 */
   }
 }
+
+/**
+ * @brief 目录容器样式
+ */
 .nav {
-  position: fixed;
-  right: 20px;
-  width: var(--toc-width);
-  box-sizing: border-box;
-  z-index: 1;
+  position: fixed;                /* 固定定位 */
+  right: 20px;                    /* 距离右侧20px */
+  width: var(--toc-width);        /* 使用变量宽度 */
+  box-sizing: border-box;         /* 盒模型计算方式 */
+  z-index: 1;                     /* 堆叠顺序 */
 }
+
+/**
+ * @brief 空目录状态
+ */
 aside.nav.nothing {
-  width: 0;
+  width: 0;                       /* 宽度为0 */
 }
 
+/**
+ * @brief 目录主体样式
+ */
 .page_toc {
-  position: fixed;
-  border-left-style: solid;
-  border-left-width: 1px;
-  border-left-color: rgba(0, 0, 0, 0.07);
-  border-image-slice: 1;
-  padding-left: 5px;
-  overflow-y: auto;
-  max-height: calc(100vh - 100px);
-  transform: scaleX(-1); /* Flip horizontally to move scrollbar left */
+  position: fixed;                /* 固定定位 */
+  border-left-style: solid;       /* 左侧边框样式 */
+  border-left-width: 1px;         /* 左侧边框宽度 */
+  border-left-color: rgba(0, 0, 0, 0.07); /* 左侧边框颜色 */
+  border-image-slice: 1;          /* 边框图片切片 */
+  padding-left: 5px;              /* 左侧内边距 */
+  overflow-y: auto;               /* 垂直滚动 */
+  max-height: calc(100vh - 100px); /* 最大高度 */
+  transform: scaleX(-1);          /* 水平翻转(移动滚动条到左侧) */
 }
 
+/**
+ * @brief 目录内容翻转回正常
+ */
 .page_toc > * {
-  transform: scaleX(-1); /* Flip content back to normal */
+  transform: scaleX(-1);          /* 水平翻转回正常 */
 }
 
+/**
+ * @brief 禁用目录链接的子元素指针事件
+ */
 .page_toc a > * {
-  pointer-events: none;
+  pointer-events: none;           /* 禁用指针事件 */
 }
 
+/**
+ * @brief 目录中的代码样式
+ */
 .page_toc code {
-  background-color: #f8f8f8;
-  border-radius: 2px;
-  color: #e96900;
-  font-family: 'Roboto Mono', Monaco, courier, monospace;
-  font-size: 0.8rem;
-  margin: 0 2px;
-  padding: 3px 5px;
+  background-color: #f8f8f8;      /* 背景色 */
+  border-radius: 2px;             /* 圆角 */
+  color: #e96900;                 /* 文字颜色 */
+  font-family: 'Roboto Mono', Monaco, courier, monospace; /* 字体 */
+  font-size: 0.8rem;              /* 字体大小 */
+  margin: 0 2px;                  /* 外边距 */
+  padding: 3px 5px;               /* 内边距 */
 }
 
+/**
+ * @brief 目录标题样式
+ */
 .page_toc p.title {
-  margin: 0 auto;
-  padding-bottom: 5px;
-  font-weight: 600;
-  font-size: 1.2em;
-  text-align: center;
-  width: 80%;
+  margin: 0 auto;                 /* 外边距 */
+  padding-bottom: 5px;            /* 底部内边距 */
+  font-weight: 600;               /* 字体粗细 */
+  font-size: 1.2em;               /* 字体大小 */
+  text-align: center;             /* 文本居中 */
+  width: 80%;                     /* 宽度80% */
 }
+
+/**
+ * @brief 目录锚点悬停状态
+ */
 .page_toc .anchor:hover:after {
-  content: "";
+  content: "";                    /* 空内容 */
 }
 
+/**
+ * @brief 目录列表基础样式
+ */
 .page_toc ul {
-  list-style-type: none;
-  margin-top: 0px;
-  padding-left: 10px;
-  color: var(--text-color-base, black);
-  text-decoration: none;
-  font-weight: 300;
-  line-height: 1.6em;
-  font-size: 1.0em;
+  list-style-type: none;          /* 无列表标记 */
+  margin-top: 0px;                /* 顶部外边距 */
+  padding-left: 10px;             /* 左侧内边距 */
+  color: var(--text-color-base, black); /* 文字颜色 */
+  text-decoration: none;          /* 无文本装饰 */
+  font-weight: 300;               /* 字体粗细 */
+  line-height: 1.6em;             /* 行高 */
+  font-size: 1.0em;               /* 字体大小 */
 }
 
+/**
+ * @brief 目录链接悬停状态
+ */
 .page_toc ul a:hover span {
-  color: var(--text-color-tertiary, #42b983);
-  border-bottom: none !important;
-  text-decoration:none !important;
+  color: var(--text-color-tertiary, #42b983); /* 文字颜色 */
+  border-bottom: none !important; /* 无底部边框 */
+  text-decoration:none !important; /* 无文本装饰 */
 }
 
+/**
+ * @brief 目录链接基础样式
+ */
 .page_toc ul a {
-  color: var(--text-color-base, black);
-  text-decoration: none;
-  font-weight: 300;
-  line-height: 1.6em;
+  color: var(--text-color-base, black); /* 文字颜色 */
+  text-decoration: none;          /* 无文本装饰 */
+  font-weight: 300;               /* 字体粗细 */
+  line-height: 1.6em;             /* 行高 */
 }
 
+/**
+ * @brief 小屏幕下的响应式样式
+ */
 @media screen and (max-width: 1200px) {
   .nav,
   .page_toc {
-    display: none;
+    display: none;                /* 隐藏目录 */
   }
   .content {
-    display: block;
+    display: block;               /* 块级显示 */
   }
   .markdown-section {
-    margin: 0 auto;
-    transform: none !important;
+    margin: 0 auto;               /* 外边距 */
+    transform: none !important;   /* 无变换 */
   }
 }
 
+/**
+ * @brief 当前活动目录项样式
+ */
 .page_toc .active {
-  border-left: 5px solid;
-  color: var(--theme-color, #42b983);
-  padding-left: 10px;
+  border-left: 5px solid;         /* 左侧边框 */
+  color: var(--theme-color, #42b983); /* 文字颜色 */
+  padding-left: 10px;             /* 左侧内边距 */
 }
 
-/* Hide scrollbar but keep scrolling functionality */
+/**
+ * @brief 隐藏滚动条但保留滚动功能
+ */
 .nav .page_toc {
-  overflow-y: auto !important;
-  scrollbar-width: none !important; /* Firefox */
-  -ms-overflow-style: none !important; /* IE/Edge */
+  overflow-y: auto !important;    /* 垂直滚动 */
+  scrollbar-width: none !important; /* Firefox隐藏滚动条 */
+  -ms-overflow-style: none !important; /* IE/Edge隐藏滚动条 */
 }
 
+/**
+ * @brief Webkit浏览器隐藏滚动条
+ */
 .nav .page_toc::-webkit-scrollbar {
-  display: none !important; /* Chrome/Safari/Webkit */
+  display: none !important;       /* 隐藏滚动条 */
 }

@@ -1,3 +1,12 @@
+/**
+ * @file docsify-pagination.css
+ * @brief 分页导航样式文件
+ * @details 定义文档底部的前后页导航标题样式
+ */
+
+/**
+ * @brief 分页项标题样式
+ */
 .pagination-item-title {
-  font-size: 1.0em;
+  font-size: 1.0em;  /* 字体大小1em */
 }

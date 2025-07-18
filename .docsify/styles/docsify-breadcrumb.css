@@ -1,30 +1,58 @@
+/**
+ * @file docsify-breadcrumb.css
+ * @brief 面包屑导航样式文件
+ * @details 定义文档页面中的面包屑导航样式和交互效果
+ */
+
+/**
+ * @brief 基础面包屑样式
+ * @details 重置列表样式并设置基础间距
+ */
 nav.breadcrumb ol {
-  list-style: none;
-  padding: 0;
-  margin: 1em 0;
-  text-transform: capitalize;
+  list-style: none;          /* 移除列表标记 */
+  padding: 0;                /* 无内边距 */
+  margin: 1em 0;             /* 上下边距1em */
+  text-transform: capitalize; /* 文本首字母大写 */
 }
 
+/**
+ * @brief 小号面包屑样式
+ */
 ol.breadcrumb--small {
-  font-size: 0.75em;
+  font-size: 0.75em;         /* 字体大小0.75em */
 }
 
+/**
+ * @brief 较小号面包屑样式
+ */
 ol.breadcrumb--smaller {
-  font-size: 0.83em;
+  font-size: 0.83em;         /* 字体大小0.83em */
 }
 
+/**
+ * @brief 正常尺寸面包屑样式
+ */
 ol.breadcrumb--normal {
-  font-size: 1em;
+  font-size: 1em;            /* 字体大小1em */
 }
 
+/**
+ * @brief 面包屑项样式
+ */
 .breadcrumb li {
-  display: inline;
+  display: inline;           /* 行内显示 */
 }
 
+/**
+ * @brief 面包屑链接样式
+ */
 .breadcrumb a {
-  text-decoration: none;
+  text-decoration: none;     /* 无下划线 */
 }
 
+/**
+ * @brief 面包屑链接悬停状态
+ */
 .breadcrumb a:hover {
-  text-decoration: underline;
+  text-decoration: underline; /* 悬停时显示下划线 */
 }
