@@ -68,7 +68,11 @@
         position: "top",
         color: "var(--theme-color,#42b983)",
         height: "3px",
-      }
+      },
+      search: {
+        paths: [],
+        placeholder: 'search',
+      }, // 默认值
     }
   </script>
   <!-- Docsify v4 -->
@@ -111,7 +115,7 @@
   <!-- 10. https://github.com/spite-triangle/docsify-codeLineNum - 为code的代码显示添加行号，并高亮显示激活行。 -->
   <link rel="stylesheet" href="./.docsify/styles/docsify-code-line-numbers.css" />
   <script src="./.docsify/plugins/docsify-code-line-numbers.js"></script>
-  
+
   <!-- 11. Custom back to top button plugin -->
   <link rel="stylesheet" href="./.docsify/styles/docsify-back-to-top.css" />
   <script src="./.docsify/plugins/docsify-back-to-top.js"></script>
@@ -128,6 +132,9 @@
   <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-stylus.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-yaml.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-markdown.min.js"></script>
+
+  <!-- 12. 全文搜索  -->
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
 </body>
 
 </html>
