@@ -54,6 +54,13 @@
         headings: 'h2, h3, h4, h5, h6',
         title: '页内导航',
       },
+      hideCode: {
+        scroll: false, // Enable scrolling
+        height: 300 // Max height
+      },
+      codeLineNum: {
+        blacklist: ['']
+      }
     }
   </script>
   <!-- Docsify v4 -->
@@ -73,14 +80,20 @@
   <script src="//unpkg.com/docsify-pagination/dist/docsify-pagination.min.js"></script>
   <!-- 5. 自定义图片路径转换插件 -->
   <script src="./.docsify/plugins/docsify-image-path.js"></script>
-  <!-- 6. 面包屑导航插件 -->
+  <!-- 6. https://github.com/FranCarstens/docsify-breadcrumb - Add a customizable breadcrumb to the top of each page. -->
   <link rel="stylesheet" href="./.docsify/styles/docsify-breadcrumb.css" />
   <script src="./.docsify/plugins/docsify-breadcrumb.js"></script>
   <!-- 7. 格式化内容插件 -->
   <script src="./.docsify/plugins/docsify-formatter.js"></script>
-  <!-- 8. 页内导航目录插件 -->
+  <!-- 8. https://github.com/mrpotatoes/docsify-toc - Add a Table of Contents to your site. -->
   <link rel="stylesheet" href="./.docsify/styles/docsify-toc.css" />
   <script src="./.docsify/plugins/docsify-toc.js"></script>
+  <!-- 9. https://github.com/jl15988/docsify-hide-code - A docsify plugin that hide code. -->
+  <link rel="stylesheet" href="./.docsify/styles/docsify-hide-code.css" />
+  <script src="./.docsify/plugins/docsify-hide-code.js"></script>
+  <!-- 10. https://github.com/spite-triangle/docsify-codeLineNum - 为code的代码显示添加行号，并高亮显示激活行。 -->
+  <link rel="stylesheet" href="./.docsify/styles/docsify-code-line-numbers.css" />
+  <script src="./.docsify/plugins/docsify-code-line-numbers.js"></script>
 </body>
 
 </html>
