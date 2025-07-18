@@ -1,123 +1,163 @@
+/** =====================================================
+ * Copyright © hk. 2022-2025. All rights reserved.
+ * File name  : docsify-toc.js
+ * Author     : 苏木
+ * Date       : 2025-07-18
+ * Version    : 
+ * Description: Add a Table of Contents to your site.
+ *              https://github.com/mrpotatoes/docsify-toc
+ * ======================================================
+ */
+
+
+// 默认配置选项
 var defaultOptions = {
-  headings: 'h1, h2',
-  scope: '.markdown-section',
+  headings: 'h1, h2',    // 要包含的标题级别
+  scope: '.markdown-section', // 内容范围选择器
+  title: 'Contents',     // 目录标题文本
+  listType: 'ul',        // 列表类型(ul/ol)
+  minScreenWidth: 1200   // 显示目录的最小屏幕宽度
+};
 
-  // To make work
-  title: 'Contents',
-  listType: 'ul',  
-}
-
-// Element builders
-var tocHeading = function(Title) {
+/**
+ * @brief 创建目录标题元素
+ * @param {string} title - 标题文本
+ * @return {HTMLElement} 标题元素
+ */
+var createTocHeading = function (title) {
   return document.createElement('h2').appendChild(
-    document.createTextNode(Title)
-  )
-}
+    document.createTextNode(title)
+  );
+};
 
-var aTag = function(src) {
+/**
+ * @brief 创建目录链接元素
+ * @param {HTMLElement} src - 源标题元素
+ * @return {HTMLElement} 链接元素
+ */
+var createTocLink = function (src) {
   var a = document.createElement('a');
   a.innerHTML = src.innerHTML;
   a.href = src.firstChild.href || '#' + src.id;
-  a.onclick = tocClick
-
-  // In order to remove this gotta fix the styles.
+  a.onclick = handleTocClick;
   a.setAttribute('class', 'anchor');
-
-  return a
+  return a;
 };
 
-var tocClick = function(e) {
-  var divs = document.querySelectorAll('.page_toc .active');
-
-  // Remove the previous classes
-  [].forEach.call(divs, function(div) {
-    div.setAttribute('class', 'anchor')
+/**
+ * @brief 处理目录项点击事件
+ * @param {Event} e - 点击事件对象
+ */
+var handleTocClick = function (e) {
+  var activeItems = document.querySelectorAll('.page_toc .active');
+  [].forEach.call(activeItems, function (item) {
+    item.setAttribute('class', 'anchor');
   });
-
-  // Make sure this is attached to the parent not itself
-  e.currentTarget.setAttribute('class', 'active')
+  e.currentTarget.setAttribute('class', 'active');
 };
 
-var createList = function(wrapper, count) {
-  while (count--) {
-    if(wrapper){
-	    wrapper = wrapper.appendChild(
-	      document.createElement('ul')
-	    );
+/**
+ * @brief 创建多级列表结构
+ * @param {HTMLElement} wrapper - 父级容器
+ * @param {number} depth - 嵌套深度
+ * @return {HTMLElement} 最内层列表元素
+ */
+var createNestedList = function (wrapper, depth) {
+  while (depth--) {
+    if (wrapper) {
+      wrapper = wrapper.appendChild(
+        document.createElement('ul')
+      );
     }
-    if (count) {
+    if (depth) {
       wrapper = wrapper.appendChild(
         document.createElement('li')
       );
     }
   }
-
   return wrapper;
 };
 
-//------------------------------------------------------------------------
-
-var getHeaders = function(selector) {
-  var headings2 = document.querySelectorAll(selector);
+/**
+ * @brief 获取所有符合条件的标题元素
+ * @param {string} selector - 选择器
+ * @return {Array} 标题元素数组
+ */
+var getHeaders = function (selector) {
+  var headings = document.querySelectorAll(selector);
   var ret = [];
-
-  [].forEach.call(headings2, function(heading) {
+  [].forEach.call(headings, function (heading) {
     ret = ret.concat(heading);
   });
-
   return ret;
 };
 
-var getLevel = function(header) {
-  var decs = header.match(/\d/g);
-
-  return decs ? Math.min.apply(null, decs) : 1;
+/**
+ * @brief 获取标题级别
+ * @param {HTMLElement} header - 标题元素
+ * @return {number} 标题级别(1-6)
+ */
+var getHeaderLevel = function (header) {
+  var level = header.match(/\d/g);
+  return level ? Math.min.apply(null, level) : 1;
 };
 
-var jumpBack = function(currentWrapper, offset) {
-  while (offset--) {
-    currentWrapper = currentWrapper.parentElement;
+/**
+ * @brief 向上查找父级列表
+ * @param {HTMLElement} current - 当前元素
+ * @param {number} levels - 向上查找的层级数
+ * @return {HTMLElement} 目标父级元素
+ */
+var findParentList = function (current, levels) {
+  while (levels--) {
+    current = current.parentElement;
   }
-
-  return currentWrapper;
+  return current;
 };
 
-var buildTOC = function(options) {
-  var ret = document.createElement('ul');
-  var wrapper = ret;
-  var lastLi = null;
-  var selector = options.scope + ' ' + options.headings
+/**
+ * @brief 构建目录结构
+ * @param {object} options - 配置选项
+ * @return {HTMLElement} 完整的目录元素
+ */
+var buildTocStructure = function (options) {
+  var tocRoot = document.createElement('ul');
+  var currentWrapper = tocRoot;
+  var lastItem = null;
+  var selector = options.scope + ' ' + options.headings;
   var headers = getHeaders(selector).filter(h => h.id);
 
-  headers.reduce(function(prev, curr, index) {
-    var currentLevel = getLevel(curr.tagName);
-    var offset = currentLevel - prev;
+  headers.reduce(function (prevLevel, currentHeader, index) {
+    var currentLevel = getHeaderLevel(currentHeader.tagName);
+    var levelDiff = currentLevel - prevLevel;
 
-    wrapper = (offset > 0)
-      ? createList(lastLi, offset)
-      : jumpBack(wrapper, -offset * 2)
+    currentWrapper = (levelDiff > 0)
+      ? createNestedList(lastItem, levelDiff)
+      : findParentList(currentWrapper, -levelDiff * 2);
 
-    wrapper = wrapper || ret;
+    currentWrapper = currentWrapper || tocRoot;
 
-    var li = document.createElement('li');
-
-    wrapper.appendChild(li).appendChild(aTag(curr));
-
-    lastLi = li;
+    var listItem = document.createElement('li');
+    currentWrapper.appendChild(listItem).appendChild(createTocLink(currentHeader));
+    lastItem = listItem;
 
     return currentLevel;
-  }, getLevel(options.headings));
+  }, getHeaderLevel(options.headings));
 
-  return ret;
+  return tocRoot;
 };
 
-// Docsify plugin functions
-function plugin(hook, vm) {
-  var userOptions = vm.config.toc;
+/**
+ * @brief 主插件函数
+ * @param {object} hook - Docsify钩子对象
+ * @param {object} vm - Docsify虚拟机实例
+ */
+function docsifyToc(hook, vm) {
+  var userOptions = Object.assign({}, defaultOptions, window.$docsify.toc);
 
   hook.doneEach(function () {
-    // Skip TOC creation on small screens
-    if (window.innerWidth < 1200) {
+    // 小屏幕不显示目录
+    if (window.innerWidth < userOptions.minScreenWidth) {
       const existingNav = document.querySelector('.nav');
       if (existingNav) {
         existingNav.parentNode?.removeChild(existingNav);
@@ -125,11 +165,10 @@ function plugin(hook, vm) {
       return;
     }
 
-    // First check if we have any headings
+    // 检查是否有标题
     const selector = userOptions.scope + ' ' + userOptions.headings;
     const headers = getHeaders(selector).filter(h => h.id);
     if (headers.length === 0) {
-      // Remove any existing TOC
       const existingNav = document.querySelector('.nav');
       if (existingNav) {
         existingNav.parentNode?.removeChild(existingNav);
@@ -137,34 +176,34 @@ function plugin(hook, vm) {
       return;
     }
 
-    // Create nav only if needed
+    // 创建导航容器
     let nav = document.querySelector('.nav');
     if (!nav) {
       const content = window.Docsify.dom.find(".content");
       if (!content) return;
-      
+
       nav = window.Docsify.dom.create("aside", "");
       window.Docsify.dom.toggleClass(nav, "add", "nav");
       window.Docsify.dom.before(content, nav);
     }
 
-    // Render TOC
+    // 渲染目录
     requestAnimationFrame(() => {
-      const toc = buildTOC(userOptions);
+      const toc = buildTocStructure(userOptions);
       const title = document.createElement('p');
       title.innerHTML = userOptions.title;
       title.setAttribute('class', 'title');
 
       const container = document.createElement('div');
       container.setAttribute('class', 'page_toc');
-      
+
       container.appendChild(title);
       container.appendChild(toc);
 
-      // Remove existing TOC
-      const tocChild = document.querySelectorAll('.nav .page_toc');
-      if (tocChild.length > 0) {
-        tocChild[0].parentNode.removeChild(tocChild[0]);
+      // 移除旧目录
+      const oldToc = document.querySelectorAll('.nav .page_toc');
+      if (oldToc.length > 0) {
+        oldToc[0].parentNode.removeChild(oldToc[0]);
       }
 
       nav.appendChild(container);
@@ -172,6 +211,34 @@ function plugin(hook, vm) {
   });
 }
 
-// Docsify plugin options
-window.$docsify['toc'] = Object.assign(defaultOptions, window.$docsify['toc']);
-window.$docsify.plugins = [].concat(plugin, window.$docsify.plugins);
+/**
+ * @brief 注册插件
+ * @description 安全地注册插件并合并配置
+ */
+(function registerPlugin() {
+  // 初始化docsify全局对象
+  window.$docsify = window.$docsify || {};
+  
+  // 深度合并配置
+  window.$docsify.toc = Object.assign(
+    {}, 
+    defaultOptions,
+    window.$docsify.toc || {}
+  );
+
+  // 防止重复注册
+  if (!window.$docsify.plugins) {
+    window.$docsify.plugins = [];
+  }
+  
+  // 检查是否已注册
+  const isRegistered = window.$docsify.plugins.some(
+    plugin => plugin.name === 'docsifyToc'
+  );
+  
+  if (!isRegistered) {
+    // 为插件函数添加标识
+    docsifyToc.name = 'docsifyToc';
+    window.$docsify.plugins.unshift(docsifyToc);
+  }
+})();
