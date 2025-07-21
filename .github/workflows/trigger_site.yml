@@ -1,0 +1,51 @@
+name: Trigger Site Deployment
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch: # 允许手动触发工作流
+
+jobs:
+  trigger_site:
+    runs-on: ubuntu-latest
+    # 仅当提交消息包含 [deploy] 或 [update] 时触发
+    if: |
+      contains(github.event.head_commit.message, '[deploy]') || 
+      contains(github.event.head_commit.message, '[update]')
+      
+    steps:
+      - name: 打印相关路径
+        run: | # | 为 yaml 的特定符号，其下可以使用多行文字。
+          echo "当前路径为 $(pwd)"
+          echo "github.workspace路径为 ${{ github.workspace }}"
+          echo "HOME路径为 $HOME"
+
+      - name: Generate formatted timestamp
+        id: timestamp
+        # 生成可读的时间戳 (格式: 2024-06-02 15:30:45)
+        run: |
+          FORMATTED_TS="$(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M:%S')"
+          echo "FORMATTED_TS=$FORMATTED_TS" >> $GITHUB_OUTPUT
+
+      - name: Trigger Site Workflow
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.PERSONAL_ACCESS_TOKENS_GITHUB }}
+          # 目标仓库（site 仓库的全名）
+          repository: docs-site/site-vitepress
+          # 与 site 仓库定义的 event-type 一致
+          event-type: trigger_deployment_site_vitepress
+          client-payload: '{
+            "ref": "${{ github.ref }}", 
+            "sha": "${{ github.sha }}", 
+            "timestamp": "${{ steps.timestamp.outputs.FORMATTED_TS }}",
+            "repository": "${{ github.repository }}"
+          }'
+      
+      # 打印负载信息
+      - name: Log trigger client-payload
+        run: |
+            echo "Dispatch SHA: ${{ github.sha }}"
+            echo "Dispatch Repository: ${{ github.repository }}"
+            echo "Triggered at: ${{ steps.timestamp.outputs.FORMATTED_TS }}"
